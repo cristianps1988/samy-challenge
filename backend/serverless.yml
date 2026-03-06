@@ -1,0 +1,50 @@
+service: user-posts-portal-backend
+
+useDotenv: true
+
+provider:
+  name: aws
+  runtime: nodejs20.x
+  region: us-east-1
+  environment:
+    DATABASE_URL: ${env:DATABASE_URL}
+    JWT_SECRET: ${env:JWT_SECRET}
+    JWT_EXPIRATION: ${env:JWT_EXPIRATION, '24h'}
+    REQRES_BASE_URL: ${env:REQRES_BASE_URL, 'https://reqres.in/api'}
+    REQRES_API_KEY: ${env:REQRES_API_KEY}
+    NODE_ENV: production
+    CORS_ORIGIN: '*'
+    PORT: '3001'
+
+plugins:
+  - serverless-esbuild
+  - serverless-offline
+
+custom:
+  esbuild:
+    bundle: true
+    minify: false
+    target: node20
+    platform: node
+    format: cjs
+    outputFileExtension: .cjs
+    external:
+      - '@aws-sdk/*'
+      - oracledb
+      - better-sqlite3
+      - mysql2
+      - mysql
+      - sqlite3
+      - pg-query-stream
+      - tedious
+
+functions:
+  api:
+    handler: src/handler.handler
+    events:
+      - httpApi:
+          path: /{proxy+}
+          method: ANY
+      - httpApi:
+          path: /
+          method: ANY
