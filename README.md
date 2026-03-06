@@ -164,6 +164,17 @@ All variables live in a single `.env` at the project root (Docker + backend shar
 
 ---
 
+## API Documentation (Swagger)
+
+Interactive OpenAPI documentation is served at `/api/docs` (Swagger UI).
+
+- **Live**: [https://ejkct87811.execute-api.us-east-1.amazonaws.com/api/docs](https://ejkct87811.execute-api.us-east-1.amazonaws.com/api/docs)
+- **Local**: `http://localhost:3001/api/docs`
+
+The spec is hand-authored using `openapi-types` and served via `swagger-ui-express`. Every endpoint is documented with request/response schemas, authentication requirements, and example payloads.
+
+---
+
 ## API Endpoints
 
 All endpoints are prefixed with `/api`. Protected endpoints require `Authorization: Bearer <token>`.
