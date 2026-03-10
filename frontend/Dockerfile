@@ -4,10 +4,15 @@ RUN npm install -g pnpm
 
 WORKDIR /app
 
-COPY package.json pnpm-lock.yaml ./
+# Copiar archivos del workspace desde la raíz
+COPY pnpm-lock.yaml pnpm-workspace.yaml package.json ./
+COPY frontend/package.json ./frontend/
+
 RUN pnpm install --frozen-lockfile
 
-COPY . .
+COPY frontend/ ./frontend/
+
+WORKDIR /app/frontend
 
 RUN pnpm run build
 
